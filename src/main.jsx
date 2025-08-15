@@ -7,4 +7,4 @@ import { RouterProvider } from 'react-router';
 import UserContextProvider from './context/UserContext';
 
 
-createRoot(document.getElementById('root')).render( <UserContextProvider><RouterProvider router={routing} /></UserContextProvider> )
+createRoot(document.getElementById('root')).render( <RouterProvider router={routing} /> )
