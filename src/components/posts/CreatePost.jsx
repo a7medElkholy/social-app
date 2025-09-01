@@ -5,11 +5,12 @@ import { PictureFrame } from 'iconsax-reactjs';
 import { Button } from 'flowbite-react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export default function CreatePost() {
  
     const { userData } = useContext(userContext)
-    const {handleSubmit,register} = useForm()
+    const {handleSubmit,register,watch,setValue} = useForm()
     const uploadInput = useRef()
 
    async function createPost(values){
@@ -26,8 +27,9 @@ export default function CreatePost() {
                     token : localStorage.getItem("token")
                 }
             })
+            toast.success("sucsses")
         } catch (error) {
-            console.log(error);
+            toast.error(error?.response?.data?.error)
         }
     }
 
@@ -43,8 +45,14 @@ export default function CreatePost() {
             </div>
 
             <TextInput {...register("body")} type='text' placeholder='ex: ay haga' className='grow' />
-            <input {...register('image')} ref={uploadInput} type="file" className='hidden' />
+            <input {...register('image')} ref={uploadInput} type="file" className='hidden' onChange={(e=> setValue("image", e.target.files))}/>
             <PictureFrame onClick={()=>uploadInput.current.click()} size={32} className='text-gray-400' />
+        </div>
+
+        <div>
+           {watch('image')?.length && (
+             <img src={URL.createObjectURL(uploadInput.current.files[0])} alt="hello ahmed" />
+           )}  
         </div>
 
         <div className="px-4 pb-4">

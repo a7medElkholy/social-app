@@ -7,6 +7,7 @@ import Posts from '../pages/posts/Posts';
 import ProtectedRoutes from './ProtectedRoutes';
 import AuthProtectedRoutes from './AuthProtectedRoutes';
 import UserContextProvider from '../context/UserContext';
+import PostDetails from '../pages/PostDetails/PostDetails';
 
 export const routing = createBrowserRouter([
   
@@ -14,6 +15,7 @@ export const routing = createBrowserRouter([
         {index:true ,element: <ProtectedRoutes><Posts/></ProtectedRoutes> },
         {path:"Login", element: <AuthProtectedRoutes><Login/></AuthProtectedRoutes> },
         {path:"register" ,element : <Register/>},
+        {path:"/posts/:id",element: <PostDetails/>},
     ]}
 
 ])

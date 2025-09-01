@@ -1,8 +1,12 @@
 import { Card } from 'flowbite-react';
 import React from 'react'
-import { Link } from 'react-router';
+import { Link, useParams } from 'react-router';
+import PostComments from './PostComments';
+import { MessageText1 } from 'iconsax-reactjs';
+import CreateComment from './CreateComment';
 
 export default function PostCard({postData}) {
+  const{id}=useParams()
   return <Card className='bg-white my-4 rounded-xl'>
     {/*  card header======================================= */}
     <div className='flex items-center gap-4'>
@@ -22,11 +26,20 @@ export default function PostCard({postData}) {
       <img className='rounded-xl' src={postData.image} alt="" />
 
       
-      <Link className='underline text-blue-600 text-end block p-2'> see post details </Link>
+      {!id&&
+      <Link  to={"/posts/" + postData._id} className='underline text-blue-600 text-end block p-2'> see post details </Link>}
     </div>
 
     {/*  card body======================================= */}
     <div>
+      <div className='flex items-center gap-4'>
+        <MessageText1 size="30" color="#999"/>
+        {postData.comments.length} comment
+
+      </div>
+      {id ? (postData.comments.map((c)=><PostComments key={c._id} comment={c}/>)) :
+      (<PostComments comment={postData?.comments[0]}/>)}
+      <CreateComment postId = {postData?._id}/>
     </div>
  </Card>
 }
